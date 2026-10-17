@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.*?>
+
+<VBox
+        alignment="CENTER"
+        spacing="20.0"
+        xmlns="http://javafx.com/javafx/17.0.12"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.docente.ventanitados.controller.UsuariosController"
+>
+    <Label text="Gestión de Usuarios" style="-fx-font-size: 18px" />
+    <HBox spacing="10" alignment="CENTER">
+        <TextField fx:id="txtId" promptText="Id" disable="true" prefWidth="40" />
+        <TextField fx:id="txtNombre" promptText="Nombre de usuario" prefWidth="100" />
+        <TextField fx:id="txtContrasena" promptText="Contraseña" prefWidth="100" />
+        <Button fx:id="btnAgregar" onAction="#handleAgregarUsuario" text="Agregar" defaultButton="true" />
+        <Button fx:id="btnEliminar" onAction="#handleEliminarUsuario" text="Eliminar" disable="true" />
+    </HBox>
+
+    <TableView fx:id="tableUsuarios" onMouseClicked="#handleSeleccionar">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" />
+            <TableColumn fx:id="colNombre" text="Nombre" />
+            <TableColumn fx:id="colContrasena" text="Contraseña" />
+        </columns>
+    </TableView>
+</VBox>
