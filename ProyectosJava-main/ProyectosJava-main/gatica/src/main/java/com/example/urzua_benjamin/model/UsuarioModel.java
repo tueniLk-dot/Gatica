@@ -13,6 +13,7 @@ public class UsuarioModel {
     }
     public ArrayList<UsuarioDto> getUsuarios(){
         return this.usuarios;
+
     }
     public void agregarUsuario(UsuarioDto usuarioDto){
         this.usuarios.add(usuarioDto);

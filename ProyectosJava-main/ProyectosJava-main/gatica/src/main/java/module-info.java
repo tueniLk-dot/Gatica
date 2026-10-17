@@ -3,6 +3,7 @@ module urzua.benjamin {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
+    requires annotations;
 
     opens com.example.urzua_benjamin to javafx.fxml, javafx.graphics;
     opens com.example.urzua_benjamin.control to javafx.fxml;

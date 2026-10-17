@@ -11,23 +11,47 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 public class UsuarioController {
+
     @FXML
     public TableColumn<UsuarioDto, Integer> colId;
 
-
     @FXML
     public TableColumn<UsuarioDto, String> colNombre;
+
     @FXML
     public TableColumn<UsuarioDto, String> colEdad;
+
     @FXML
     public Button btnEliminar;
 
     @FXML
+    public TextField txtNomnre;
+
+    @FXML
+    public Button btnLimpiar;
+
+    @FXML
+    public TableView tableIngreso;
+
+
+    @FXML
+    private TableView<UsuarioDto> tabla;
+
+    @FXML
     public Button btnCont;
+
     @FXML
     public Button btnActualizar;
-    private UsuarioModel usuarioModel; // = new UsuarioModel(); forma mas sencilla
-    private Integer id = 0; // id usuario en automatizacion por asi referirme
+
+    @FXML
+    public Label lblEstado;
+
+    private UsuarioModel usuarioModel;
+    // = new UsuarioModel(); forma mas sencilla
+
+    private Integer id = 0;
+    // id usuario en automatizacion por asi referirme
+
     private UsuarioDto eliminarUsuario;
 
     @FXML
@@ -49,14 +73,8 @@ public class UsuarioController {
         // la lista observable se conecta al arraylist del MOdelo
         observableUsuarios = FXCollections.observableArrayList(usuarioModel.getUsuarios());// el observatorio quedara pendiente de ArrayList
         // conecto la tabla JAvaFX a la lista observacion, cuando ya se observe, debe actualizar usuarios de la tabla
-        tableUsuario.set(observableUsuarios);
-        tableUsuario.getSelectionModel().selectedItemProperty().addListener((obs, anterior, seleccionado) -> {
-            if (seleccionado != null) {
-                txtNombre.getText(seleccionado.getNombre());
-                txtEdad.getText(String.valueOf(seleccionado.getEdad()));
-                btnActualizar.setDisable(false);
-            }
-        });
+        tableUsuario.setItems(observableUsuarios);
+        
 
     }
 
@@ -86,7 +104,7 @@ public class UsuarioController {
             usuarioDto.setId(id);//
 
             this.usuarioModel.agregarUsuario(usuarioDto);
-            this.txtAprovacion.setText(String.valueOf(this.usuarioModel.getUsuarios().size()));
+            this.txtIngreso.setText(String.valueOf(this.usuarioModel.getUsuarios().size()));
             // actualizar vista observable
             this.observableUsuarios.setAll(usuarioModel.getUsuarios());
         } catch (Exception e) {
@@ -119,9 +137,18 @@ public class UsuarioController {
         }
     }
 
-    public void handleEliminar(ActionEvent actionEvent) {
-        this.usuarioModel.eliminar(eliminarUsuario);
-        this.observableUsuarios.setAll(usuarioModel.getUsuarios());
+    @FXML
+    private void actualizar() {
+        UsuarioDto seleccionada = tabla.getSelectionModel().getSelectedItem();
+        if (seleccionada == null || txtNombre.getText().isBlank()) {
+            lblEstado.setText("Selecciona un registro y escribe un nombre.");
+            return;
+        }
+        seleccionada.setNombre(txtNombre.getText().trim());
+        tabla.refresh();
+        lblEstado.setText("Registro actualizado.");
     }
 
+    public void handleEliminar(ActionEvent actionEvent) {
+    }
 }
